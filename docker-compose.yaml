@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  petshopservice:
+    build: ./pet_shop_service
+    container_name: petshopservice
+    ports:
+      - 3000:3000
+  postgresdb:
+    image: postgres:latest
+    container_name: petshopdb
+    environment:
+      - POSTGRES_PASSWORD=password123
+      - POSTGRES_USER=petshopuser
+      - POSTGRES_DB=petshop

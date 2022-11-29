@@ -1,0 +1,50 @@
+  #%RAML 1.0
+  title: Pet Shop
+  version: v1
+  baseUri: http://localhost:8083
+
+  /pets:
+    type: {Collection : {item : Pet}}
+    /{id}:
+      type: { Member: {item: Pet} }
+
+      
+  types:
+   Pet:
+    properties:
+      name: string
+      kind: string
+      price: number
+    example: 
+      name: snoopy
+      kind: dog
+      price: 1000
+      
+  resourceTypes:
+    Collection:
+      get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: <<item>>[]
+      post:
+        body:
+          application/json:
+            type: <<item>>
+    Member:
+      delete:
+        responses:
+          204:
+      put:
+        body:
+          application/json:
+            type: <<item>>
+  traits:
+    FiltrableByPrice:
+      queryParameters:
+        priceLessThan: number
+        priceMoreThan: number
+
+
+
