@@ -12,14 +12,14 @@ export class Pet {
   name?: string;
   @Column({
     type: String,
-    name: 'Kind',
+    name: 'FamilyName',
     nullable: false,
   })
-  kind?: string;
+  familyName?: string;
   @Column({
     type: Number,
-    name: 'Price',
+    name: 'Salary',
     nullable: false,
   })
-  price?: number;
+  salary?: number;
 }

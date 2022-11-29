@@ -1,3 +1,4 @@
+import { PetsCalculatorService } from '../pets-calculator/pets-calculator.service';
 import {
   Body,
   Controller,
@@ -9,27 +10,41 @@ import {
 } from '@nestjs/common';
 import { PetService } from '../services/pet.service';
 import { Pet } from '../entities/pet.entity';
+import { get } from 'http';
 
-@Controller('/pet')
+@Controller('/employees')
 export class PetController {
-  constructor(private readonly petService: PetService) {}
+  constructor(
+    private readonly petService: PetService,
+    private readonly calcService: PetsCalculatorService,
+  ) {}
   @Get()
-  public async getPets(): Promise<Pet[]> {
+  public async getall(): Promise<Pet[]> {
     return await this.petService.getPets();
   }
 
   @Post()
-  public async addPet(@Body() pet: Pet): Promise<Pet> {
+  public async add(@Body() pet: Pet): Promise<Pet> {
     return await this.petService.addPet(pet);
   }
 
   @Delete('/:id')
-  public async deletePet(@Param('id') id: number) {
+  public async delete(@Param('id') id: number) {
     return await this.petService.deletePet(id);
   }
 
   @Put('/:id')
-  public async updatePet(@Param('id') id: number, @Body() pet: Pet) {
+  public async update(@Param('id') id: number, @Body() pet: Pet) {
     return await this.petService.updatePet(id, pet);
+  }
+
+  @Get('/salary/eu')
+  public async salaryEu() {
+    return await this.calcService.getTotalSalary();
+  }
+
+  @Get('/salary/ds')
+  public async salaryDs() {
+    return (await this.calcService.getTotalSalary()) * 1.7;
   }
 }
