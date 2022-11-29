@@ -1,0 +1,59 @@
+#%RAML 1.0
+title: employeeapidesign
+version: v1
+baseUri: http://localhost:8083
+
+/employees:
+  type: {Collection : {item : Employee}}
+  /{id}:
+    type: { Member: {item: Employee} }
+  /salary:
+    /eu:
+       get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: number
+    /ds:
+       get:
+        responses:
+          200:
+            body:
+              application/json:
+                type: number  
+
+    
+types:
+ Employee:
+  properties:
+    name: string
+    familyName: string
+    salary: number
+  example: 
+    name: snoopy
+    familyName: dog
+    salary: 500
+    
+resourceTypes:
+  Collection:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              type: <<item>>[]
+    post:
+      body:
+        application/json:
+          type: <<item>>
+  Member:
+    delete:
+      responses:
+        204:
+    put:
+      body:
+        application/json:
+          type: <<item>>
+
+
